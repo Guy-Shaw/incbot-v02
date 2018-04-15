@@ -1,0 +1,4 @@
+id_find:
+  id=[exit]
+  type_mask=a={keyword|function}
+  type(exit)=2=function

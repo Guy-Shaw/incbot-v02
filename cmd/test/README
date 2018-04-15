@@ -1,0 +1,16 @@
+
+Tests
+-----
+
+test-esyms.c
+  Ensure that errno.h is included whenever any of the symbolic names
+  of Unix errno values are mentioned.
+
+  But not in comments, not strings, and not in #include directives
+
+
+test-var-err.c
+test-fun-err.c
+  Ensure that mention of @identifier{err} does not trigger the
+  #include <err.h>, but a call of the function err() does.
+
