@@ -3,7 +3,7 @@
  * Library: libcscript
  * Brief: Generally handly headers for most libcscript code
  *
- * Copyright (C) 2015-2016 Guy Shaw
+ * Copyright (C) 2015-2019 Guy Shaw
  * Written by Guy Shaw <gshaw@acm.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -118,6 +118,7 @@ extern int    filev_probe(size_t filec, char **filev);
 
 extern void   set_eprint_fh(void);
 extern void   set_debug_fh(const char *fname);
+extern int    parse_cardinal(size_t *r, const char *str);
 extern void   fshow_str_array(FILE *, size_t, char * const *);
 extern size_t fshow_str(FILE *, const char *);
 extern size_t fshow_strn(FILE *, const char *, size_t);
@@ -137,7 +138,7 @@ extern void * guard_malloc(size_t sz);
 extern void * guard_realloc(void *memp, size_t sz);
 extern void * guard_calloc(size_t nelem, size_t sz);
 extern void   fexpain_err(FILE *f, int err);
-extern void   eexpain_err(int err);
+extern void   eexlpain_err(int err);
 extern void   expain_err(int err);
 extern int    file_test(const char *tests, const char *fname);
 
