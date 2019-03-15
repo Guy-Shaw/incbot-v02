@@ -31,8 +31,7 @@ extern "C" {
 #include <stdbool.h>
 #include <getopt.h>
 #include <stdio.h>
-#include <unistd.h>
-// XXX #include <sys/types.h>      // Import size_t
+#include <sys/types.h>      // Import size_t
 
 typedef unsigned int uint_t;
 
@@ -87,15 +86,15 @@ extern int dbgprintf(const char *, ...);
 // filev_handle iterator
 
 struct fvh {
-    uint_t filec;
+    size_t filec;
     char **filev;
     FILE *fh;   // Initially NULL
-    uint_t fnr;
+    size_t fnr;
     char *fname;
     char *line;
     char *endl;
-    uint_t glnr;
-    uint_t flnr;
+    size_t glnr;
+    size_t flnr;
     int eof;
 };
 
@@ -103,18 +102,22 @@ typedef struct fvh fvh_t;
 
 #endif /* IMPORT_FVH */
 
-// ==================== libcscript external functions
+#ifdef CSCRIPT_MAIN
 
-// XXX extern int    set_print_fh(void);
-extern void   set_eprint_fh(void);
-extern void   set_debug_fh(const char *fname);
-
-extern int    filev_probe(size_t filec, char **filev);
 extern int    filev_by_char(size_t filec, char **filev);
 extern int    filev_by_rune(size_t filec, char **filev);
 extern int    filev_by_word(size_t filec, char **filev);
 extern int    filev_by_line(size_t filec, char **filev);
 extern int    filev_by_paragraph(size_t filec, char **filev);
+
+#endif /* CSCRIPT_MAIN */
+
+extern int    filev_probe(size_t filec, char **filev);
+
+// ==================== libcscript external functions
+
+extern void   set_eprint_fh(void);
+extern void   set_debug_fh(const char *fname);
 extern void   fshow_str_array(FILE *, size_t, char * const *);
 extern size_t fshow_str(FILE *, const char *);
 extern size_t fshow_strn(FILE *, const char *, size_t);
@@ -131,8 +134,8 @@ extern int     close_from(int fd);
 extern void   fshow_svar(FILE *f, const char *var, const char *value);
 extern void   dbg_show_svar(const char *var, const char *value);
 extern void * guard_malloc(size_t sz);
+extern void * guard_realloc(void *memp, size_t sz);
 extern void * guard_calloc(size_t nelem, size_t sz);
-extern void * guard_realloc(void *mem, size_t sz);
 extern void   fexpain_err(FILE *f, int err);
 extern void   eexpain_err(int err);
 extern void   expain_err(int err);

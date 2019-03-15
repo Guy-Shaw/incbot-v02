@@ -534,11 +534,82 @@ read_id_table_stream(FILE *f, const char *fname)
     return (err_count ? 1 : 0);
 }
 
+static const char *endl = "\n";
+static const int SQ = '\'';
+
+static inline char *
+vischar_r(char *buf, size_t sz, int c)
+{
+    if (isprint(c)) {
+        buf[0] = c;
+        buf[1] = '\0';
+    }
+    else {
+        snprintf(buf, sz, "\\x%02x", c);
+    }
+    return (buf);
+}
+
+static inline void
+ieputs(const char *str)
+{
+    fputs(str, stderr);
+}
+
+static inline void
+ieputc(int chr)
+{
+    fputc(chr, stderr);
+}
+
+static void
+fshow_path(FILE *f, const char *path)
+{
+    const char *s;
+    char visbuf[4];
+
+    for (s = path; *s; ++s) {
+        if (isprint(*s)) {
+            fputc(*s, f);
+        }
+        else {
+            fputs(vischar_r(visbuf, sizeof (visbuf), *s), f);
+        }
+    }
+}
+
+static inline void
+fshow_quoted_path(FILE *f, const char *path)
+{
+    fputc(SQ, f);
+    fshow_path(f, path);
+    fputc(SQ, f);
+}
+
+
+static inline void
+ieshow_path(const char *path)
+{
+    fshow_path(stderr, path);
+}
+
+static inline void
+ieshow_quoted_path(const char *path)
+{
+    fshow_quoted_path(stderr, path);
+}
+
 int
 read_id_table_file(const char *fname)
 {
     FILE *srcf;
     int rv;
+
+    if (verbose) {
+        ieputs("id_table=");
+        ieshow_quoted_path(fname);
+        ieputs(endl);
+    }
 
     srcf = fopen(fname, "r");
     if (srcf == NULL) {

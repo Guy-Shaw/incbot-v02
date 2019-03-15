@@ -28,17 +28,16 @@
 #include <ctype.h>      // isprint
 #include <getopt.h>     // no_argument, getopt_long, required_argument, option
 #include <incbot.h>     // read_id_table_file, incbot_src_file,
-                        // read_config_file, show_includes
-#include <stdbool.h>    // bool, true, false
+                        // read_config_file, show_includes, trace_identifier
+#include <stdbool.h>    // true, bool, false
 #include <stddef.h>     // size_t, NULL
 #include <stdio.h>      // fputs, fputc, FILE, snprintf, stdout
-#include <stdlib.h>     // exit
+#include <stdlib.h>     // exit, realpath
+#include <string.h>     // strlen, memcpy, strcmp
+#include <unistd.h>     // access, R_OK
 #include "cscript.h"    // eprintf, filev_probe, eprint, fshow_str_array,
-                        // set_debug_fh, set_eprint_fh, sname
-#include <string.h>     // memcpy()
+                        // guard_malloc, set_debug_fh, set_eprint_fh, sname
 // IWYU::END
-
-#include <incbot.h>
 
 const char *program_path;
 const char *program_name;
